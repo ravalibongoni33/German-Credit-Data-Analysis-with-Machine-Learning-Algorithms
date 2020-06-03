@@ -1,0 +1,108 @@
+---
+title: "data mining"
+author: "Suneeth Ravilla"
+date: "5/2/2020"
+output: html_document
+---
+```{r}
+setwd("/Users/ravalibongoni/Downloads")
+source(("Myfunctions.R"))
+```
+
+```{r}
+data <- read.csv("~/Downloads/GERMAN_DATA.csv")
+View(data)
+```
+
+```{r}
+data2 <- data[,-c(9,19)]
+```
+
+```{r}
+data2$Y = ifelse(data2$Y =="2",1,0)
+```
+
+```{r}
+class(data2$Y)
+```
+
+```{r}
+data2$CHK_ACCT_ST = factor(data2$CHK_ACCT_ST, levels = c('A11','A12','A13','A14'), labels = c(1,2,3,4))
+data2$CRED_HIST = factor(data2$CRED_HIST, levels = c('A30','A31','A22','A33','A34'), labels = c(1,2,3,4,5))
+data2$PURPOSE = factor(data2$PURPOSE, levels = c('A40','A41','A42','A43','A44','A45','A46','A48','A49','A410'), labels = c(1,2,3,4,5,6,7,8,9,10))
+data2$SAV_ACCT_BOND = factor(data2$SAV_ACCT_BOND, levels = c('A61','A62','A63','A64','A65'), labels = c(1,2,3,4,5))
+data2$EMPLYMT_ST = factor(data2$EMPLYMT_ST, levels = c('A71','A72','A73','A74','A75'), labels = c(1,2,3,4,5))
+data2$COAPP_GURNTR = factor(data2$COAPP_GURNTR, levels = c('A101','A102','A103'), labels = c(1,2,3))
+data2$PROPERTY = factor(data2$PROPERTY, levels = c('A121','A122','A123','A124'), labels = c(1,2,3,4))
+data2$OTHR_INSTL = factor(data2$OTHR_INSTL, levels = c('A141','A142','A143'), labels = c(1,2,3))
+data2$HOUS_ST = factor(data2$HOUS_ST, levels = c('A151','A152','A153'), labels = c(1,2,3))
+data2$JOB = factor(data2$JOB, levels = c('A171','A172','A173','A174'), labels = c(1,2,3,4))
+data2$FRGN_WORKR = factor(data2$FRGN_WORKR, levels = c('A201','A202'), labels = c(1,2))
+```
+
+
+```{r}
+p2 <- partition.2(data2, 0.7)
+data3.train <- p2$data.train
+data3.val <- p2$data.val
+```
+
+
+```{r}
+logistic_model = glm(Y~.,family=binomial(link='logit'),data = data3.train)
+summary(logistic)
+```
+
+
+```{r}
+library(stats)
+logistic.m2.step = step(logistic_model)
+summary(logistic.m2.step)
+```
+
+
+```{r}
+pred.val <- predict(logistic.m2.step, newdata = data3.val,type = "response")
+
+```
+
+
+```{r}
+# Asymmetric missclassification
+cost.ratio <- 5
+# create a vector for cutoff 
+cutoff <- seq(0.01, 0.3, 0.05)
+# create an empty vector of same lengthmiss
+missclassification.cost <- rep(NA, length(cutoff))
+# calculate missclassification cost for each cutoff value
+for(i in 1:length(cutoff)){
+  res.conf <- conf(data3.val$Y,
+pred.val, cutoff[i])
+missclassification.cost[i] <- res.conf$conf.mat[2,1] +res.conf$conf.mat[1,2]*cost.ratio
+}
+# create a plot for cutoff vs. cost
+plot(cutoff, missclassification.cost, main = "cost curve",xlab = "cutoff", ylab = "miss classification cost",type = "l")
+```
+
+
+```{r}
+conf(data3.val$Y,pred.val,0.06)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,108 @@
+---
+title: "Untitled"
+output:
+  word_document: default
+  html_document: default
+---
+
+Importing data into the workspace and checking if there are any missing values in the data.
+```{r}
+data <- read.csv("~/Downloads/GERMAN_DATA.csv")
+data[!complete.cases(data),]
+```
+
+Importing Myfunctions.R into the workspace
+
+```{r}
+setwd("/Users/ravalibongoni/Downloads")
+source(("Myfunctions.R"))
+```
+
+
+```{r}
+library(rpart)
+library(rpart.plot)
+```
+
+Data Partitioning- 70% train data and 30% validation data
+```{r}
+set.seed(0)
+p2 <- partition.2(data, 0.8)
+data1.train <- p2$data.train
+data1.val <- p2$data.val
+```
+
+Construct a classification tree on train data
+
+```{r}
+dt <- rpart(data1.train$Y ~ . , data = data1.train, method = "class",parms = list(loss = matrix(c(0, 5,1, 0), nrow = 2)))
+```
+
+Plot the constructed tree
+```{r}
+prp(dt, type = 1, extra = 1, under = TRUE, split.font = 2, varlen = -10)
+```
+
+
+
+get prediction on the validation data
+
+```{r}
+pred.val = predict(dt, data1.val, type = 'class')
+conf(data1.val$Y, pred.val) 
+```
+
+Cost complexity pruning and printing the table
+```{r}
+cv.ct <- rpart(Y ~ . , data = data1.train, method = "class", cp = 0.00001, minsplit = 5, xval = 5,parms = list(loss = matrix(c(0, 5,1, 0), nrow = 2)))
+printcp(cv.ct)
+```
+
+Prune the tree with minimum xerror
+```{r}
+prune.ct <- prune(cv.ct, cp = cv.ct$cptable[which.min(cv.ct$cptable[,"xerror"]), "CP"])
+```
+
+plot the pruned tree
+```{r}
+prp(prune.ct, type = 1, extra = 1, under = TRUE, split.font = 2, varlen = -10)
+```
+
+Evaluating performance of pruned tree
+```{r}
+pred.val = predict(prune.ct, data1.val, type = 'class')
+conf(data1.val$Y, pred.val)
+```
+Performance is not good. looking for other cp value
+
+prune the model with cp= 0.0173913
+
+```{r}
+prune.ct2 <- prune(cv.ct, cp = 0.0173913)
+```
+
+plot the pruned tree
+```{r}
+prp(prune.ct2, type = 1, extra = 1, under = TRUE, split.font = 2, varlen = -10)
+```
+
+Evaluating performance of pruned tree
+```{r}
+pred.val = predict(prune.ct2, data1.val, type = 'class')
+conf(data1.val$Y, pred.val)
+```
+Better model with high sensitivity.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

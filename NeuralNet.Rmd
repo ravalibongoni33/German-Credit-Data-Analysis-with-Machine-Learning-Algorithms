@@ -1,0 +1,286 @@
+---
+title: "Datamining  Project"
+author: "ravali bongoni"
+date: "5/8/2020"
+output:
+  html_document:
+    df_print: paged
+---
+Importing data
+```{r}
+data <- read.csv("~/Downloads/GERMAN_DATA.csv")
+```
+
+Checking datatype of response variable
+
+```{r}
+class(data$Y)
+```
+
+Converting the numeric response variable into factor 
+```{r}
+data$Y <- as.factor(data$Y)
+```
+
+Importing R functions
+```{r}
+setwd("/Users/ravalibongoni/Downloads")
+source(("Myfunctions.R"))
+```
+
+checking the table proportion of response variable in the data and creating dummies of response
+```{r}
+table(data$Y)
+data$Good <-  ifelse(data$Y == "1", 1, 0)
+data$Bad <- ifelse(data$Y == "2", 1, 0)
+```
+
+creating dummies of all variables.
+```{r}
+data$CHK_ACCT_ST_A11 <- ifelse(data$CHK_ACCT_ST == "A11", 1, 0)
+data$CHK_ACCT_ST_A12 <- ifelse(data$CHK_ACCT_ST == "A12", 1, 0)
+data$CHK_ACCT_ST_A13<- ifelse(data$CHK_ACCT_ST == "A13", 1, 0)
+data$CHK_ACCT_ST_A14 <- ifelse(data$CHK_ACCT_ST == "A14", 1, 0)
+data$CRED_HIST_A30 <- ifelse(data$CRED_HIST == "A30", 1, 0)
+data$CRED_HIST_A31 <- ifelse(data$CRED_HIST == "A31", 1, 0)
+data$CRED_HIST_A32 <- ifelse(data$CRED_HIST == "A32", 1, 0)
+data$CRED_HIST_A33 <- ifelse(data$CRED_HIST == "A33", 1, 0)
+data$CRED_HIST_A34 <- ifelse(data$CRED_HIST == "A34", 1, 0)
+#View(data)
+```
+
+
+```{r}
+data$PURPOSE_A40 <- ifelse(data$PURPOSE == "A40", 1, 0)
+data$PURPOSE_A41 <- ifelse(data$PURPOSE == "A41", 1, 0)
+data$PURPOSE_A42 <- ifelse(data$PURPOSE == "A42", 1, 0)
+data$PURPOSE_A43 <- ifelse(data$PURPOSE == "A43", 1, 0)
+data$PURPOSE_A44 <- ifelse(data$PURPOSE == "A44", 1, 0)
+data$PURPOSE_A45 <- ifelse(data$PURPOSE == "A45", 1, 0)
+data$PURPOSE_A46 <- ifelse(data$PURPOSE == "A46", 1, 0)
+data$PURPOSE_A47 <- ifelse(data$PURPOSE == "A47", 1, 0)
+data$PURPOSE_A48 <- ifelse(data$PURPOSE == "A48", 1, 0)
+data$PURPOSE_A49 <- ifelse(data$PURPOSE == "A49", 1, 0)
+data$PURPOSE_A410 <- ifelse(data$PURPOSE == "A410", 1, 0)
+```
+
+```{r}
+data$SAV_ACCT_BOND_A61 <- ifelse(data$SAV_ACCT_BOND == "A61", 1, 0)
+data$SAV_ACCT_BOND_A62 <- ifelse(data$SAV_ACCT_BOND == "A62", 1, 0)
+data$SAV_ACCT_BOND_A63 <- ifelse(data$SAV_ACCT_BOND == "A63", 1, 0)
+data$SAV_ACCT_BOND_A64 <- ifelse(data$SAV_ACCT_BOND == "A64", 1, 0)
+data$SAV_ACCT_BOND_A65 <- ifelse(data$SAV_ACCT_BOND == "A65", 1, 0)
+```
+
+```{r}
+data$EMPLYMT_ST_A71 <- ifelse(data$EMPLYMT_ST == "A71", 1, 0)
+data$EMPLYMT_ST_A72 <- ifelse(data$EMPLYMT_ST == "A72", 1, 0)
+data$EMPLYMT_ST_A73 <- ifelse(data$EMPLYMT_ST == "A73", 1, 0)
+data$EMPLYMT_ST_A74 <- ifelse(data$EMPLYMT_ST == "A74", 1, 0)
+data$EMPLYMT_ST_A75 <- ifelse(data$EMPLYMT_ST == "A75", 1, 0)
+```
+
+```{r}
+data$COAPP_GURNTR_A101 <- ifelse(data$COAPP_GURNTR == "A101", 1, 0)
+data$COAPP_GURNTR_A102 <- ifelse(data$COAPP_GURNTR == "A102", 1, 0)
+data$COAPP_GURNTR_A103 <- ifelse(data$COAPP_GURNTR == "A103", 1, 0)
+```
+
+```{r}
+data$PROPERTY_A121 <- ifelse(data$PROPERTY == "A121", 1, 0)
+data$PROPERTY_A122 <- ifelse(data$PROPERTY == "A122", 1, 0)
+data$PROPERTY_A123 <- ifelse(data$PROPERTY == "A123", 1, 0)
+data$PROPERTY_A124 <- ifelse(data$PROPERTY == "A124", 1, 0)
+```
+
+```{r}
+data$OTHR_INSTL_A141 <- ifelse(data$OTHR_INSTL == "A141", 1, 0)
+data$OTHR_INSTL_A142 <- ifelse(data$OTHR_INSTL == "A142", 1, 0)
+data$OTHR_INSTL_A143 <- ifelse(data$OTHR_INSTL == "A143", 1, 0)
+```
+
+```{r}
+data$HOUS_ST_A151 <- ifelse(data$HOUS_ST == "A151", 1, 0)
+data$HOUS_ST_A152 <- ifelse(data$HOUS_ST == "A152", 1, 0)
+data$HOUS_ST_A153 <- ifelse(data$HOUS_ST == "A153", 1, 0)
+```
+
+```{r}
+data$JOB_A171 <- ifelse(data$JOB == "A171", 1, 0)
+data$JOB_A172 <- ifelse(data$JOB == "A172", 1, 0)
+data$JOB_A173 <- ifelse(data$JOB == "A173", 1, 0)
+data$JOB_A174 <- ifelse(data$JOB == "A174", 1, 0)
+```
+
+```{r}
+data$FRGN_WORKR_A201 <- ifelse(data$FRGN_WORKR == "A201", 1, 0)
+data$FRGN_WORKR_A202 <- ifelse(data$FRGN_WORKR == "A202", 1, 0)
+```
+
+```{r}
+data2 <- data[,-c(1,3,4,6,7,9,10,12,14,15,17,19,20,21)]
+#View(data2)
+```
+
+Rescaling the data
+```{r}
+library(scales)
+data2$DUR<- rescale(data2$DUR)
+data2$CRED_AMT <- rescale(data2$CRED_AMT)
+data2$INST_RT_PER_DISP_INCM <- rescale(data2$INST_RT_PER_DISP_INCM)
+data2$AGE <- rescale(data2$AGE)
+data2$NUM_CRED <- rescale(data2$NUM_CRED)
+data2$NUM_PEOP_LIABL <- rescale(data2$NUM_PEOP_LIABL)
+data2$DUR_RES <- rescale(data2$DUR_RES)
+```
+
+
+```{r}
+head(data2)
+```
+
+
+
+```{r}
+set.seed(0)
+p2 <- partition.2(data2, 0.7)
+### call training set
+mydata.train <- p2$data.train
+### call validation set
+mydata.val <- p2$data.val
+```
+
+Run the neural net with 2 layers and 3 nodes
+```{r}
+library(neuralnet)
+nn <- neuralnet(mydata.train$Good+mydata.train$Bad ~., data = mydata.train, hidden = c(2,2))
+```
+
+Plot the neural net model
+```{r}
+### plot network
+plot(nn, rep="best")
+```
+
+```{r}
+#nn$net.result
+```
+
+Calculate the cutoff value with minimum missclassification cost
+```{r}
+#Asymmetric missclassification cost
+cost.ratio <- 5
+# create a vector for cutoff values
+cutoff <- seq(0.015, 0.5, 0.015)
+# create an empty vector of same length
+missclassification.cost <- rep(NA, length(cutoff))
+# calculate missclassification cost for each cutoff value
+for(i in 1:length(cutoff)){
+res.conf <- conf(mydata.train$Bad, nn$net.result[[1]][,2], cutoff[i])
+missclassification.cost[i] <- res.conf$conf.mat[2,1]*cost.ratio + res.conf$conf.mat[1,2]
+}
+# create a plot for cutoff vs. cost
+plot(cutoff, missclassification.cost, main = "cost curve",
+xlab = "cutoff", ylab = "miss classification cost",
+type = "l")
+```
+
+Prediction with cutoff 0.3
+```{r}
+predY.train <- ifelse(nn$net.result[[1]][,2] > 0.35, 1, 0)
+```
+
+confusion matrix with the prediction 
+```{r}
+conf(mydata.train$Bad, predY.train)
+```
+
+Evaluating performance on validation data
+```{r}
+val.predict <- compute(nn, mydata.val)
+# create predicted response with two categories
+# based on highest posterior probability
+predY.val <- ifelse(val.predict$net.result[,2] > 0.35, 1, 0)
+# create confusion matrix
+conf(mydata.val$Bad, predY.val)
+```
+
+neural net with 4 nodes
+```{r}
+nn3 <- neuralnet(mydata.train$Good+mydata.train$Bad ~., data = mydata.train, hidden = 4)
+```
+
+plot the neural net
+```{r}
+plot(nn3, rep="best")
+```
+
+output of neural net
+```{r}
+nn3$net.result
+```
+
+
+
+```{r}
+
+#Asymmetric missclassification cost
+cost.ratio <- 5
+# create a vector for cutoff values
+cutoff <- seq(0.015, 0.1, 0.015)
+# create an empty vector of same length
+missclassification.cost <- rep(NA, length(cutoff))
+# calculate missclassification cost for each cutoff value
+for(i in 1:length(cutoff)){
+res.conf <- conf(mydata.train$Bad, nn3$net.result[[1]][,2], cutoff[i])
+missclassification.cost[i] <- res.conf$conf.mat[2,1]*cost.ratio + res.conf$conf.mat[1,2]
+}
+# create a plot for cutoff vs. cost
+plot(cutoff, missclassification.cost, main = "cost curve",
+xlab = "cutoff", ylab = "miss classification cost",
+type = "l")
+```
+
+```{r}
+predY3.train <- ifelse(nn3$net.result[[1]][,2] > 0.03, 1, 0)
+```
+
+```{r}
+conf(mydata.train$Bad, predY3.train)
+```
+
+
+
+
+```{r}
+val.predict3 <- compute(nn3, mydata.val)
+# create predicted response with two categories
+# based on highest posterior probability
+predY3.val <- ifelse(val.predict3$net.result[,2] > 0.03, 1, 0)
+# create confusion matrix
+conf(mydata.val$Bad, predY3.val)
+```
+
+ROC curve
+```{r}
+library(pROC)
+r <- roc(mydata.val$Bad, predY3.val)
+plot.roc(r, main = "ROC curve")
+auc(r)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
