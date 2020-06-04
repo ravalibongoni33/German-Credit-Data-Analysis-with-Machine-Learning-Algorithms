@@ -32,7 +32,7 @@ Y is changed to (0,1) where 1 indicates &quot;Bad&quot; and 0 indicates &quot;Go
 
 First all the variables in the data are considered for the logistic fit. I created dummy variables for categorical variables with different levels.
 
-![](RackMultipart20200603-4-18c1nc0_html_551599b9e77bbc18.jpg)
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_1.png)
 
 Next, I did rescaling for continuous variables since all variables are in different scale. This helps in maintaining all the variables in same standards and equal likely to the modeling. The sample output would look like below after creating dummies and rescaling. Else the &quot;CRED\_AMT&quot; – credit amount is ranging in 1000s which is way far from other variables.
 
