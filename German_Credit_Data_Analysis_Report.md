@@ -104,17 +104,21 @@ We can see only 12 bad customers out of 200 who are classified as good. The sens
 
 The idea of cost complexity pruning is to identify a tree of optimal size that has the minimum cost complexity. I pruned the model and obtained the below result. From this, we need to select the cost complexity value which is corresponding to the minimum xerror value.
 
-T ![](RackMultipart20200603-4-18c1nc0_html_1a51d13d88631bf2.jpg) he table above provides the cross-complexity parameter (CP) and the cross-validation error (xerror) for 24 trees of increasing depth. nsplit denotes the number of splits for the associated tree, rel error reflects the error on the training sample, xstd shows the estimated standard error for the cross validation error. The root node error is 0.71. The minimum value of xerror would be 1.64 and the corresponding nsplit for this xerror is 108 (109 terminal nodes) which may provide the optimum cp value.
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_11.png) 
+
+The table above provides the cross-complexity parameter (CP) and the cross-validation error (xerror) for 24 trees of increasing depth. nsplit denotes the number of splits for the associated tree, rel error reflects the error on the training sample, xstd shows the estimated standard error for the cross validation error. The root node error is 0.71. The minimum value of xerror would be 1.64 and the corresponding nsplit for this xerror is 108 (109 terminal nodes) which may provide the optimum cp value.
 
 This can be verified from the evaluation of performance of this pruned model on validation data.
 
-T ![](RackMultipart20200603-4-18c1nc0_html_52a60d0c6b111e4.jpg) he sensitivity of the model is 0.48 which is low compared to original model. This indicates that the bad customers are not correctly predicted as bad.
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_12.png) 
+
+The sensitivity of the model is 0.48 which is low compared to original model. This indicates that the bad customers are not correctly predicted as bad.
 
 I tried taking the cp value as 0.173913 which corresponds to the xerror value 2.6939. After this value in the table, the xerror value increased and it decreased all the way down. I will check the performance of this tree.
 
-![](RackMultipart20200603-4-18c1nc0_html_eef0c9cded6ff5ec.png)
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_13.png)
 
-![](RackMultipart20200603-4-18c1nc0_html_f0a9d9a3e39e3ed3.jpg)
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_14.png)
 
 From the above tree, I can confirm that, this is the better pruned model since the sensitivity of the model increased to 0.88. The accuracy is 0.65 which is better than previous model. From this model, most of the bad customers are correctly predicted as bad and the count if 9 applicants out of 200. The model eliminated most of the variables and selected Status of existing checking account, employment time period till date, Purpose of application of loan, Properties and the duration.
 
@@ -130,27 +134,30 @@ Neural network accepts continuous regressor variables. German data is a mixed da
 
 The train data is taken into neural net function which results in the neural net model. Here Good and Bad columns which are created as dummies are fitted with all other variables in the data. Here we get two outputs with Good and Bad. The sample output is shown. These are the predicted probabilities as good and bad customer. We have to set a cutoff to classify these into both categories. Here &quot;bad&quot; is considered as the class of importance and labeled as 1.
 
-![](RackMultipart20200603-4-18c1nc0_html_d036e33103c9751.gif)
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_15.png)
 
-Fig 1 Fig 2
+Fig 1 
+
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_16.png)
+
+Fig 2
 
 Fig1 shows the plot of neural network with 2 layers and 2 nodes. Fig 2 gives the output in terms of probability of good and bad customers.
 
-![](RackMultipart20200603-4-18c1nc0_html_28042930673757f3.gif)
 
 From the above cost curve, the cut off 0.35 has the minimum misclassification cost. With this cutoff value the prediction is done on validation data and the accuracy of the model is 0.76. The sensitivity of the model is 0.63 which indicates that only 63% of bad customers as correctly predicted in validation sample. But our goal is to reduce the number of bad customers who are predicted as good. For that, the input weights of the neural nets are to be adjusted so that the model accuracy and sensitivity increases.
 
 I am considering the neural network model with 1 layer and 4 nodes. This changes the input weights in the model and the resulting prediction of good and bad customers will change. The model is now fit with these input changes. The output is shown below.
 
-![](RackMultipart20200603-4-18c1nc0_html_1569a311801d6539.gif)
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_17.png)
 
 The cost curve of the neural net model shows the cutoff value 0.35 has the minimum misclassification rate. Hence that cutoff is taken and predicted the performance of validation data.
 
-![](RackMultipart20200603-4-18c1nc0_html_777b85045dfee637.gif)
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_18.png)
 
 We can see that the sensitivity of the model increased to 0.72 from previous model which means 72%of the bad customers are correctly predicted in the validation data. There are only 28 bad applicants who are predicted wrong as good customers. The accuracy of the model is also increased. Hence this model can be considered as the better significant model with neural net algorithm.
 
-![](RackMultipart20200603-4-18c1nc0_html_5872124cc3b1420f.jpg)
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_19.png)
 
 The area under the ROC curve estimated with predicted model of 4 nodes is, 0.65.
 
