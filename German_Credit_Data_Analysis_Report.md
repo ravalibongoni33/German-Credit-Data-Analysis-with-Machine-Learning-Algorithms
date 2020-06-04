@@ -42,7 +42,11 @@ The model is first trained and then tested on the validation data. Here, 80% ran
 
 Logistic model is fit with all the variables in the train data. Next step regression is used for variable selection. Significant variables are chosen from the logistic model.
 
-![](RackMultipart20200603-4-18c1nc0_html_3bbfe20773b64b4f.jpg) ![](RackMultipart20200603-4-18c1nc0_html_37d34cde34f586e9.jpg)
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_2.png) 
+
+
+
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_3.png)
 
 The summary of step wise regression gives the variables selected from original logistic model with null deviance of 950.61 and residual deviance of 703.59. The corresponding standard error and estimate of each variable selected can
 
@@ -56,7 +60,7 @@ And remaining characteristics of the applicant is not taken into consideration s
 
 The model designed on train data is now tested on validation data to evaluate the performance of the model. With the predicted model in &quot;pred.val&quot;, the cutoff value is calculated for minimum misclassification cost.
 
- ![](RackMultipart20200603-4-18c1nc0_html_5e6cf0ef22e22aca.gif)
+ ![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_4.png)
 
 The cost curve shows that, the misclassification cost has decreased as the cutoff value increased up to certain value and then increased. We could see a dip at 0.16 which is now chosen as out cutoff value to classify the applicants after prediction.
 
@@ -64,7 +68,9 @@ From the below confusion matrix,
 
 Our class of importance here is &quot;bad&quot; and the model was able to predict 66 applicants as &quot;Bad&quot; who are actually bad out of 200 applicants. 72 applicants are predicted correctly to be &quot;Good&quot; applicants. We could see high sensitivity in the model which indicates that the model is pretty good (88%) in identifying bad applicants as bad which is our goal of analysis. Though it has low specificity, this model can be considered as better model with the accuracy of predicting bad applicants of 69% percent.
 
-![](RackMultipart20200603-4-18c1nc0_html_e85c55e3edd71bf2.png) ![](RackMultipart20200603-4-18c1nc0_html_8e03ec155e5bda70.jpg)
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_5.png) 
+
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_6.png)
 
 Area under the curve: 0.8068
 
@@ -82,17 +88,19 @@ Original data is around 1000 observations. It is always better to partition the 
 
 Now constructing a classification tree on train data with &quot;rpart&quot; function in R.
 
-![](RackMultipart20200603-4-18c1nc0_html_891521630c74343.jpg)
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_7.png)
 
 The classification tree constructed can be plotted with prp function and the result would be a tree which directs the new observations to classify as a &quot;Good&quot; or &quot;Bad&quot; applicant.
 
-![](RackMultipart20200603-4-18c1nc0_html_4149a03295237b7d.jpg)
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_8.png)
 
 From the above plot we can see that,
 
 We get the prediction of validation data based on the constructed model. The main aim of this analysis is to classify actual &quot;Bad&quot; applicants as &quot;Bad&quot; and it would be worse when classified them as &quot;Good&quot; than it is to class a customer as bad when they are good. Hence our class of importance is &quot;bad&quot; which is represented by &#39;2&#39; in the data.
 
-W ![](RackMultipart20200603-4-18c1nc0_html_8c17792118cfae4e.jpg) e can see only 12 bad customers out of 200 who are classified as good. The sensitivity of this prediction is 84% which is a good sign to our model. The specificity of the model is 0.52 and accuracy is 0.64. Though the specificity and accuracy are a bit low, I believe this prediction made on validation data to be significant and this is a better model.
+![](https://github.com/ravalibongoni33/German-Credit-Data-Analysis-with-Machine-Learning-Algorithms/blob/master/images/German_Credit/German_10.png)
+
+We can see only 12 bad customers out of 200 who are classified as good. The sensitivity of this prediction is 84% which is a good sign to our model. The specificity of the model is 0.52 and accuracy is 0.64. Though the specificity and accuracy are a bit low, I believe this prediction made on validation data to be significant and this is a better model.
 
 The idea of cost complexity pruning is to identify a tree of optimal size that has the minimum cost complexity. I pruned the model and obtained the below result. From this, we need to select the cost complexity value which is corresponding to the minimum xerror value.
 
