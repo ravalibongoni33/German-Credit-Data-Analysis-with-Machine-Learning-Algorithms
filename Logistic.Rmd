@@ -1,6 +1,6 @@
 ---
 title: "data mining"
-author: "Suneeth Ravilla"
+author: "Ravali Bongoni"
 date: "5/2/2020"
 output: html_document
 ---
